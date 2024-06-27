@@ -1,7 +1,7 @@
 {
   "name": "metacrafters-eth-avax-types_of_error-assessment",
   "version": "1.0.0",
-  "description": "This project is a part of Metacrafters ETH+AVAX course assessment.",
+  "description": "This project is part of the ETH+AVAX course assessment by Metacrafters.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
