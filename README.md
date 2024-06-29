@@ -7,7 +7,7 @@ The MyToken smart contract is an ERC-20 compatible token contract that allows us
 * Transfer tokens from one address to another.
 * Keep track of token balances for each address.
 * Emit events for token transfers, burning, and minting.
-* Calculate total Turnover
+* Calculate Total Turnover, Total Minted and Total Burn
 
  ## Getting Started
 These instructions will guide you on how to deploy and interact with the MyToken smart contract.
