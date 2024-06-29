@@ -1,52 +1,66 @@
-# accessing a smart contract from local hardhat network and accessing it on remix ide 
+# MyToken Smart Contract
+The MyToken smart contract is an ERC-20 compatible token contract that allows users to mint, burn, transfer, and track the balance of tokens.
 
+## Features
+* Mint new tokens to a provided address.
+* Burn tokens, reducing the total supply.
+* Transfer tokens from one address to another.
+* Keep track of token balances for each address.
+* Emit events for token transfers, burning, and minting.
+* Calculate total Turnover
 
+ ## Getting Started
+These instructions will guide you on how to deploy and interact with the MyToken smart contract.
 
-The custom token will have following functionalities:
-- The owner of the token will be able to mint tokens to other accounts
-- Any user can transfer tokens to other accounts.
-- Any user can burn tokens.
-
-
-
-### Follow the steps to configure the project
-
-#### 1. Create a hardhat Javascript project
-
-Run the following commands to setup the project
-
-```
-npm init -y
-npm install --save-dev hardhat
-npm install @nomicfoundation/hardhat-toolbox
-npx hardhat
-```
-
-Choose the (Javascript) option.
-
-#### 2. Create a local Hardhat network
+# Prerequisites
+* Node.js and npm installed on your machine.
+### Installation
+1. Clone this repository:
 
 ```
-npx hardhat node
+git clone <repository-url>
 ```
-
-Note the URL and port at which the server is running
-
-#### 3. Deploy the smart contract
+2. Install the project dependencies:
 
 ```
-npx hardhat run --network localhost scripts/deploy.js
+cd myToken
+npm install
 ```
+### Deploying the Contract
+1. Edit the hardhat.config.js file and configure the desired network under the networks section.
 
-Note the address of the smart contract
+2. Deploy the contract to the chosen network using Hardhat:
 
+```
+npx hardhat run scripts/deploy.js --network <network-name>
+```
+The contract address will be logged to the console upon successful deployment.
 
-#### 4. Remix IDE
+### Interacting with the Contract
+To interact with the deployed MyToken contract, you can use tools like Remix or write custom scripts using the Ethereum JavaScript libraries.
 
-In the Remix IDE
-- Go to the deploy tab.
-- Select the environment as `Dev - Hardhat Provider`.
-- Enter the URL of the Hardhat network in the dialog box. You will be able to access the accounts present in your local Hardhat network.
-- Enter the address of the smart contract in the `At Address` tab.
+#### Minting Tokens
+The contract owner can mint new tokens to a provided address using the mint function.
 
-Now you'll be able to interact with the custom token deployed on local Hardhat network. 
+#### Burning Tokens
+Any user can burn their own tokens using the burn function. This reduces the total supply.
+
+#### Transferring Tokens
+Users can transfer their tokens to another address using the transfer function.
+
+#### Testing
+To run the test suite for the MyToken contract, execute the following command:
+```
+npx hardhat test
+```
+The test suite includes various scenarios to ensure the proper functioning of the contract.
+
+## License
+This project is licensed under the MIT License.
+
+## Acknowledgments
+This contract is based on the ERC-20 token standard.
+The contract was developed using the Hardhat framework.
+
+## Author
+Kirtan Nahar
