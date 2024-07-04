@@ -1,52 +1,42 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-pragma solidity ^0.8.18;
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract CR7_Token{
-    string public tokenName = "Cristiano Ronaldo";
-    string public tokenSymbol = "CR7";
-    uint public currentCR7Supply = 0;
+contract CR7Token is ERC20 {
+    address public owner;
     uint public totalMintedCR7 = 0;
     uint public totalBurnedCR7 = 0;
-    uint public total_CR7_Turnover = 0 ;
-    address public tokenowner;
+    uint public totalCR7Turnover = 0;
 
-    mapping(address => uint) balance;
-
-    constructor(){
-        tokenowner = msg.sender;
+    constructor(string memory name, string memory symbol, uint256 initialSupply) ERC20(name, symbol) {
+        owner = msg.sender;
+        _mint(owner, initialSupply * 10 ** uint(decimals()));
+        totalMintedCR7 = initialSupply * 10 ** uint(decimals());
     }
 
-    function getCR7Balance() external view returns (uint){
-        return balance[msg.sender];
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can perform this action");
+        _;
     }
 
-    function MintCR7Tokens(uint _amount) public  {
-        require(msg.sender == tokenowner,"You do not have the required permissions to mint tokens");
-        balance[msg.sender] += _amount;
-        currentCR7Supply += _amount;
-        totalMintedCR7 += _amount;
-        
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+        totalMintedCR7 += amount;
+        updateTurnover();
     }
 
-     function BurnCR7Tokens(uint _amount) public  {
-        if(balance[msg.sender] >= _amount){
-        balance[msg.sender] -= _amount;
-        currentCR7Supply -= _amount;
-        totalBurnedCR7 += _amount;
-        }
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
+        totalBurnedCR7 += amount;
+        updateTurnover();
     }
 
-    function SendCR7Tokens(address _address, uint _amount) public{
-        require(balance[msg.sender] >= _amount,"Insufficient funds in the account, unable to proceed with the transfer.");
-        balance[_address] += _amount;
-        balance[msg.sender] -= _amount;
-        currentCR7Supply -= _amount;
-        
+    function updateTurnover() internal {
+        totalCR7Turnover = totalMintedCR7 + totalBurnedCR7;
     }
 
-    function calculateTurnover() external returns(uint){
-        total_CR7_Turnover = totalBurnedCR7 + totalMintedCR7;
-        return total_CR7_Turnover;
+    function calculateTurnover() external view returns (uint) {
+        return totalCR7Turnover;
     }
 }
